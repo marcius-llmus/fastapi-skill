@@ -1,6 +1,6 @@
 # FastAPI Backend Architecture Skill
 
-A Claude Code skill that enforces a strict, batteries-included architecture for FastAPI backends. It turns "vague best practices" into hard contracts the agent will read and apply on every change.
+An AI coding agent skill (Claude Code, Codex, etc.) with FastAPI architecture rules.
 
 ## What it gives you
 
@@ -15,23 +15,26 @@ A Claude Code skill that enforces a strict, batteries-included architecture for 
 - **Per-layer test strategy.** Routes mock services, services mock repositories, repositories hit a real test DB.
 - **Mandatory reference reading.** A reference matrix and mid-turn re-check rule keep the agent honest when work expands into new layers.
 
-## Pairs well with
+## Combine it!
 
-[`fastapi-cookiecutter`](https://github.com/marcius-llmus/fastapi-cookiecutter) — ships the wired baseline (DB engine, session manager, container, settings profiles, health app) so the skill governs *how to use it*, not how to scaffold it.
+Pair this skill with [`fastapi-cookiecutter`](https://github.com/marcius-llmus/fastapi-cookiecutter), which ships the wired baseline (DB engine, session manager, container, settings profiles, health app) so the skill can focus on *how to use it* rather than how to scaffold it.
 
 ## Install
 
-Clone into your Claude Code skills folder:
+Clone into your agent's skills folder. Examples:
 
 ```bash
+# Claude Code
 git clone <this-repo-url> ~/.claude/skills/fastapi-backend-architecture
+
+# Codex
+git clone <this-repo-url> ~/.codex/skills/fastapi-backend-architecture
 ```
 
-That's it. Claude Code auto-discovers `SKILL.md` and activates the skill whenever a FastAPI footprint is detected (imports, dependencies, or layer-shaped paths like `routes.py`, `services/`, `repositories/`, `container/`).
+That's it. The agent auto-discovers `SKILL.md` and activates the skill whenever a FastAPI footprint is detected (imports, dependencies, or layer-shaped paths like `routes.py`, `services/`, `repositories/`, `container/`).
 
 ## Layout
 
 - `SKILL.md` — non-negotiable rules and reference matrix (the entry point).
 - `STRUCTURE.md` — project layout, four-layer contract, mandatory invocation matrix.
 - `references/` — per-topic deep references (services, repositories, dependencies, flows, testing, logging, migrations, ...).
-- `scripts/` — standalone setup baselines.

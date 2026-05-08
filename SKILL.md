@@ -155,7 +155,6 @@ Stop and re-check before editing in those cases. Do not continue on memory or â€
 - **Starter scaffolds / implementation examples**
   - [references/scaffolds.md](references/scaffolds.md) (one-time bootstrap patterns for new apps/modules)
   - [references/examples.md](references/examples.md)
-  - [scripts/database_setup.py](scripts/database_setup.py) (DB setup baseline)
 
 ## Output Expectations
 

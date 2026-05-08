@@ -9,17 +9,9 @@ Use this reference whenever creating or changing:
 - repository write behavior
 - startup initialization that touches DB
 
-## Canonical Setup (Use This Pattern)
+## Canonical Setup
 
-Use the standalone setup script as your baseline implementation:
-
-- [../scripts/database_setup.py](../scripts/database_setup.py)
-
-This script provides:
-- async engine + sessionmaker setup
-- transactional session context manager
-- `Base` declarative model base
-- optional app-lifetime session manager bootstrap pattern
+The wired baseline lives in [`fastapi-cookiecutter`](https://github.com/marcius-llmus/fastapi-cookiecutter): `src/core/db/{base,engine,repository}.py` for the `Base`, `DatabaseSessionManager`, and `BaseRepository`, plus `src/container/core/db.py` and `src/container/lifecycle.py` for the app-lifetime session manager. Treat those files as the implementation; this reference governs how to use them.
 
 ## Environment-Selected Database URL
 
@@ -104,26 +96,9 @@ The worker function may call provider/network code and then open its own short `
 
 ## Request DB Dependency
 
-The FastAPI request dependency belongs in `src/container/core/dependencies.py`
-because it adapts FastAPI request scope to the container-owned session manager.
-Keep `src/core/db/` focused on DB primitives such as `Base`,
-`DatabaseSessionManager`, and repository bases.
+`get_db()` lives in `src/container/core/dependencies.py` because it adapts FastAPI request scope to the container-owned session manager. Keep `src/core/db/` focused on DB primitives (`Base`, `DatabaseSessionManager`, repository bases) — never put FastAPI dependency adapters there.
 
-```python
-from collections.abc import AsyncIterator
-
-from sqlalchemy.ext.asyncio import AsyncSession
-
-from src.container.core.db import build_session_manager
-
-
-async def get_db() -> AsyncIterator[AsyncSession]:
-    sessionmanager = build_session_manager()
-    async with sessionmanager.session() as db:
-        yield db
-```
-
-Routes and FastAPI auth dependencies use `Depends(get_db)`. Tasks and flows use `async with sessionmanager.session() as db:`.
+Routes and FastAPI auth dependencies use `Depends(get_db)`. Tasks and flows use `async with sessionmanager.session() as db:` instead.
 
 ## Repository Write Contract
 
