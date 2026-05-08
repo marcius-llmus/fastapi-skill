@@ -155,10 +155,11 @@ async def update(self, *, db_obj: Entity, obj_in: EntityUpdate) -> Entity:
     for key, value in update_data.items():
         setattr(db_obj, key, value)
     await self.db.flush()
+    await self.db.refresh(db_obj)
     return db_obj
 ```
 
-Avoid generic repository patterns that call `refresh()` after mutation. The tracked instance is already in the active session. If a caller immediately needs DB-generated fields such as `created_at` or `updated_at`, reload explicitly in that concrete caller or service path instead of baking `refresh()` into shared repository helpers.
+`refresh()` is the default so callers receive DB-generated fields (`id`, `created_at`, `updated_at`) without a second round trip in the service. Drop it only if profiling shows the extra `SELECT` is wasteful for a specific entity.
 
 ## Service Contract Around DB
 

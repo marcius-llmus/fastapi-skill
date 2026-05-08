@@ -33,7 +33,7 @@ Apply a strict architecture for FastAPI backends where:
 10. Use `ReadModel` only for read DTOs that benefit from `model_validate(obj)` against matching object attributes. Use `BaseModel` for create/update/internal DTOs and for assembled response payloads that are not direct object projections.
 11. `core/` means fixed app primitives and fixed technology choices, not "all infrastructure". Put something in `core/` only when the whole app is built on it and you are not treating it as a swappable seam.
 12. The database foundation lives in `src/core/db/` as a stable package. Do not place session/base/repository primitives under `infrastructure/sqlalchemy`.
-13. Repository write methods must stay transaction-unaware and must not use `add()`/`refresh()` in the generic pattern.
+13. Repository write methods must stay transaction-unaware (no `commit()`/`rollback()`). The generic update pattern refreshes by default so callers get DB-generated fields (`id`, `created_at`, `updated_at`); drop `refresh()` only if you have measured it as unnecessary overhead.
 14. Repository tests use real DB interaction; do not mock DB calls in repository tests.
 15. Apps NEVER import other apps. Communication through `shared/` protocols only.
 16. `domain/` imports NOTHING. `shared/` imports only `domain/`. `infrastructure/` implements `shared/` protocols. These dependency rules are never violated.

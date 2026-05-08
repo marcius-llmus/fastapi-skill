@@ -27,7 +27,7 @@ class BaseRepository[ModelType: Base]:
 
     async def create(self, obj_in: BaseModel) -> ModelType:
         db_obj = self.model(**obj_in.model_dump())
-        db_obj = await self.db.merge(db_obj)
+        self.db.add(db_obj)
         await self.db.flush()
         return db_obj
 
@@ -36,6 +36,7 @@ class BaseRepository[ModelType: Base]:
         for key, value in update_data.items():
             setattr(db_obj, key, value)
         await self.db.flush()
+        await self.db.refresh(db_obj)
         return db_obj
 
     async def delete(self, *, pk: Any) -> ModelType | None:
@@ -68,7 +69,7 @@ class EntityRepository(BaseRepository):
 
     async def create(self, obj_in: EntityCreate) -> Entity:
         db_obj = Entity(**obj_in.model_dump())
-        db_obj = await self.db.merge(db_obj)
+        self.db.add(db_obj)
         await self.db.flush()
         return db_obj
 

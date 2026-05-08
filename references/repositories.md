@@ -104,7 +104,8 @@ async def update(self, *, db_obj: Wallet, obj_in: WalletUpdate) -> Wallet:
     for key, value in update_data.items():
         setattr(db_obj, key, value)
     await self.db.flush()
+    await self.db.refresh(db_obj)
     return db_obj
 ```
 
-Use `refresh()` only in a concrete caller or repo method that immediately needs DB-generated fields such as `created_at` or `updated_at`. Do not build generic `refresh()` into shared repository helpers.
+`refresh()` is the default so callers get DB-generated fields (`id`, `created_at`, `updated_at`) without an extra reload. Drop it only when profiling shows the round trip is unnecessary for a specific entity.
