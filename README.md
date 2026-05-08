@@ -25,13 +25,11 @@ Clone into your agent's skills folder. Examples:
 
 ```bash
 # Claude Code
-git clone <this-repo-url> ~/.claude/skills/fastapi-backend-architecture
+git clone https://github.com/marcius-llmus/fastapi-skill.git ~/.claude/skills/fastapi-backend-architecture
 
 # Codex
-git clone <this-repo-url> ~/.codex/skills/fastapi-backend-architecture
+git clone https://github.com/marcius-llmus/fastapi-skill.git ~/.codex/skills/fastapi-backend-architecture
 ```
-
-That's it. The agent auto-discovers `SKILL.md` and activates the skill whenever a FastAPI footprint is detected (imports, dependencies, or layer-shaped paths like `routes.py`, `services/`, `repositories/`, `container/`).
 
 ## Layout
 
