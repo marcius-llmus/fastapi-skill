@@ -141,6 +141,8 @@ Stop and re-check before editing in those cases. Do not continue on memory or â€
 - **Schemas / DTO contracts / update payloads**
   - [references/schemas-models.md](references/schemas-models.md)
   - [references/repositories.md](references/repositories.md) (required for update semantics)
+- **Pagination / filtering / text search / list endpoints**
+  - [references/pagination.md](references/pagination.md) (required when adding or changing any list endpoint that takes `limit`/`offset`, filters, or `q` text search)
 - **FastAPI dependency / request resolution / transaction boundaries**
   - [references/dependencies.md](references/dependencies.md)
   - [references/scoped-resources.md](references/scoped-resources.md) (required when choosing between `get_db()`, task-local session composition, or a shared scope object)

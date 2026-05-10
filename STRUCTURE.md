@@ -25,6 +25,7 @@ the implementation expands into a new layer or boundary during the same turn.
 - [references/repositories.md](references/repositories.md): persistence rules and update semantics.
 - [references/database-setup.md](references/database-setup.md): engine/session/transaction standards.
 - [references/schemas-models.md](references/schemas-models.md): DTO/model responsibilities and update DTO design.
+- [references/pagination.md](references/pagination.md): pagination/filtering/text-search split across repo, service, route, schemas.
 - [references/dependencies.md](references/dependencies.md): FastAPI dependency adapters and their boundary with the container.
 - [references/scoped-resources.md](references/scoped-resources.md): request/job-scoped resource ownership patterns.
 - [references/testing.md](references/testing.md): test architecture and mocking matrix.
@@ -56,6 +57,9 @@ Before implementing, call references based on task type:
 - **Schema/DTO change**
   - Required: [references/schemas-models.md](references/schemas-models.md)
   - Also required: [references/repositories.md](references/repositories.md) for update semantics
+- **Pagination / filtering / list endpoint change**
+  - Required: [references/pagination.md](references/pagination.md)
+  - Also required: layer doc(s) being touched ([references/repositories.md](references/repositories.md), [references/services.md](references/services.md), [references/routes.md](references/routes.md))
 - **FastAPI dependency / request resolution change**
   - Required: [references/dependencies.md](references/dependencies.md)
   - Also required: [references/database-setup.md](references/database-setup.md) when request DB access is part of the change
